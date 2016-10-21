@@ -7,31 +7,33 @@ enum {
 
 int visited[GRAPH_VERTICES] = {-1};
 int queue[GRAPH_VERTICES] = {-1};
-int queue_ind = -1;
+int write_ind = -1;
+int read_ind = -1;
 
 static inline void queue_push(int node)
 {
-	queue_ind++;
-	queue[queue_ind] = node;
+	write_ind++;
+	queue[write_ind] = node;
 }
 
 static inline int queue_pop(void)
 {
 	int node;
 
-	if (queue_ind < 0)
+	read_ind++;
+
+	if (read_ind > write_ind)
 		return -1;
 
-	node = queue[queue_ind];
-	queue[queue_ind] = -1;
-	queue_ind--;
+	node = queue[read_ind];
+	queue[read_ind] = -1;
 
 	return node;
 }
 
 static inline int queue_empty(void)
 {
-	if (queue_ind == -1)
+	if (read_ind == write_ind)
 		return 1;
 
 	return 0;
