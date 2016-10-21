@@ -4,6 +4,7 @@ enum {
 	GRAPH_VERTICES = 10,
 };
 
+/* Non-recoursive implementation of Breath-First Search algorithm */
 
 int visited[GRAPH_VERTICES] = {-1};
 int queue[GRAPH_VERTICES] = {-1};
@@ -78,8 +79,10 @@ int bfs(int adjustment_list[GRAPH_VERTICES][GRAPH_VERTICES], int path[GRAPH_VERT
 
 		i = 0;
 		do {
+			if (i >= GRAPH_VERTICES)
+				break;
+
 			child = adjustment_list[node][i];
-			i++;
 
 			if (child == -1)
 				break;
@@ -88,6 +91,7 @@ int bfs(int adjustment_list[GRAPH_VERTICES][GRAPH_VERTICES], int path[GRAPH_VERT
 				queue_push(child);
 				visited[child] = node;				// save parent
 			}
+			i++;
 		} while (1);
 
 	}
